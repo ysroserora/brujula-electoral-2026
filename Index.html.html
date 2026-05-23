@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brújula Electoral 2026 — Colombia</title>
+<meta name="description" content="20 preguntas para descubrir tu afinidad con los candidatos presidenciales de Colombia 2026. Seguridad, economía, pensiones y empleo.">
+<!-- Open Graph para preview bonito en WhatsApp -->
+<meta property="og:title" content="🗳️ Brújula Electoral Colombia 2026">
+<meta property="og:description" content="¿Con quién vas? 20 preguntas y descubre tu % de afinidad con Cepeda, De La Espriella y Valencia.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://flagcdn.com/w320/co.png">
+<meta name="theme-color" content="#f5c842">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181b24;
+    --border: #232636;
+    --text: #eef0f6;
+    --muted: #6b7080;
+    --accent-a: #3ecf8e;
+    --accent-b: #f5c842;
+    --accent-c: #e84040;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 10%, rgba(245,200,66,.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(62,207,142,.05) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(232,64,64,.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .wrapper { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* HEADER */
+  header { text-align: center; padding: 56px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .flag-strip { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; }
+  .flag-strip span { display: block; height: 4px; border-radius: 2px; }
+  .flag-strip .f1 { width: 60px; background: #fcd116; }
+  .flag-strip .f2 { width: 60px; background: #003893; }
+  .flag-strip .f3 { width: 60px; background: #ce1126; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem,5vw,3.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -.5px; margin-bottom: 10px; }
+  header h1 em { font-style: normal; background: linear-gradient(90deg,#f5c842,#f08a28); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  header p { color: var(--muted); font-size: .95rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+  /* CANDIDATOS PREVIEW */
+  .cands-preview { display: flex; justify-content: center; gap: 16px; margin-top: 22px; flex-wrap: wrap; }
+  .cand-chip { display: flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border); border-radius: 40px; padding: 6px 14px 6px 8px; font-size: .78rem; font-weight: 500; }
+  .cand-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 32px; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); margin-bottom: 8px; }
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg,#f5c842,#f08a28); border-radius: 2px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 28px; animation: fadeUp .35s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+  .topic-chip { display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; margin-bottom: 14px; }
+  .topic-seg { background: rgba(232,64,64,.12); border-color: rgba(232,64,64,.2); color: #f07070; }
+  .topic-eco { background: rgba(245,200,66,.10); border-color: rgba(245,200,66,.2); color: #f5c842; }
+  .topic-pen { background: rgba(62,207,142,.10); border-color: rgba(62,207,142,.2); color: #3ecf8e; }
+  .topic-lider { background: rgba(140,110,230,.12); border-color: rgba(140,110,230,.2); color: #a090e0; }
+
+  .q-text { font-family: 'Playfair Display', serif; font-size: clamp(1.05rem,2.5vw,1.25rem); font-weight: 700; line-height: 1.45; margin-bottom: 24px; color: var(--text); }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option { position: relative; cursor: pointer; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px 14px 48px; background: var(--surface2); transition: border-color .18s, background .18s, transform .12s; font-size: .93rem; line-height: 1.45; color: var(--text); user-select: none; }
+  .option:hover { border-color: #3a3f54; background: #1d2030; transform: translateX(2px); }
+  .option.selected { border-color: var(--sel-color, #f5c842); background: var(--sel-bg, rgba(245,200,66,.07)); }
+  .option .bullet { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color .18s, background .18s; flex-shrink: 0; }
+  .option.selected .bullet { border-color: var(--sel-color, #f5c842); background: var(--sel-color, #f5c842); }
+  .option.selected .bullet::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--bg); }
+
+  /* NAV */
+  .nav { display: flex; gap: 12px; margin-top: 24px; }
+  button { cursor: pointer; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 600; transition: all .18s; }
+  .btn-next { flex: 1; padding: 14px 24px; background: linear-gradient(135deg,#f5c842,#f08a28); color: #0a0c10; box-shadow: 0 4px 20px rgba(245,200,66,.25); }
+  .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(245,200,66,.35); }
+  .btn-next:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+  .btn-back { padding: 14px 20px; background: transparent; border: 1.5px solid var(--border) !important; color: var(--muted); }
+  .btn-back:hover { border-color: #3a3f54 !important; color: var(--text); }
+
+  /* RESULTS */
+  #results { display: none; animation: fadeUp .4s ease both; }
+  .results-header { text-align: center; padding: 40px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+  .results-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 900; margin-bottom: 8px; }
+  .results-header p { color: var(--muted); font-size: .9rem; }
+
+  .candidate-result { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; transition: border-color .3s, box-shadow .3s; }
+  .candidate-result.top-pick { border-color: var(--c-color); box-shadow: 0 0 30px var(--c-glow); }
+  .c-top-badge { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: var(--c-color); color: var(--bg); margin-bottom: 10px; }
+  .c-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; }
+  .c-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; }
+  .c-party { font-size: .78rem; color: var(--muted); margin-top: 3px; }
+  .c-pct { font-size: 2.4rem; font-weight: 900; font-family: 'Playfair Display', serif; color: var(--c-color); line-height: 1; }
+  .c-bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .c-bar-fill { height: 100%; border-radius: 4px; background: var(--c-color); box-shadow: 0 0 12px var(--c-glow); transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .c-sub { font-size: .82rem; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+
+  /* SHARE BUTTON */
+  .share-wrap { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-share-wa {
+    flex: 1; padding: 15px 20px;
+    background: #25D366; color: #fff;
+    border-radius: 10px; font-size: .95rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(37,211,102,.3);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-share-wa:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(37,211,102,.45); }
+  .btn-copy-link {
+    padding: 15px 20px;
+    background: var(--surface2); border: 1.5px solid var(--border) !important;
+    color: var(--text); border-radius: 10px; font-size: .9rem;
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-copy-link:hover { border-color: #3a3f54 !important; }
+  .btn-copy-link.copied { border-color: #3ecf8e !important; color: #3ecf8e; }
+
+  .result-note { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-top: 24px; font-size: .83rem; color: var(--muted); line-height: 1.7; }
+  .result-note strong { color: var(--text); }
+
+  .btn-restart { display: block; width: 100%; padding: 16px; background: transparent; border: 1.5px solid var(--border) !important; color: var(--muted); border-radius: 10px; font-size: .92rem; font-weight: 600; margin-top: 14px; text-align: center; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-restart:hover { border-color: #3a3f54 !important; color: var(--text); }
+
+  /* TOPIC BREAKDOWN */
+  .breakdown { margin-top: 28px; }
+  .breakdown h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+  .topic-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: .82rem; }
+  .topic-label { width: 110px; flex-shrink: 0; color: var(--muted); }
+  .topic-bars { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .mini-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .mini-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .mini-fill { height: 100%; border-radius: 3px; transition: width 1.4s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .mini-pct { width: 32px; text-align: right; color: var(--muted); font-size: .75rem; }
+
+  footer { text-align: center; padding: 30px 0 10px; font-size: .75rem; color: var(--muted); }
+  footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+  @media (max-width: 520px) {
+    .card { padding: 22px 16px 18px; }
+    .c-pct { font-size: 1.9rem; }
+    .c-name { font-size: 1.05rem; }
+    .topic-label { width: 80px; font-size: .75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="flag-strip"><span class="f1"></span><span class="f2"></span><span class="f3"></span></div>
+    <h1>Brújula <em>Electoral</em> 2026</h1>
+    <p>20 preguntas sobre seguridad, economía, pensiones y empleo. Descubre con qué % te identificas con cada candidato presidencial.</p>
+    <div class="cands-preview">
+      <div class="cand-chip"><span class="cand-dot" style="background:#3ecf8e"></span>Iván Cepeda</div>
+      <div class="cand-chip"><span class="cand-dot" style="background:#f5c842"></span>De La Espriella</div>
+      <div class="cand-chip"><span class="cand-dot" style="background:#e84040"></span>Paloma Valencia</div>
+    </div>
+  </header>
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="prog-label">Pregunta 1 de 20</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="card" id="q-card"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="results-header">
+      <h2>Tu Brújula Electoral</h2>
+      <p>Afinidad programática con los candidatos presidenciales Colombia 2026</p>
+    </div>
+    <div id="results-cards"></div>
+    <div class="breakdown"><h3>Desglose por tema</h3><div id="breakdown-rows"></div></div>
+
+    <div class="share-wrap">
+      <button class="btn-share-wa" onclick="shareWA()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Compartir por WhatsApp
+      </button>
+      <button class="btn-copy-link" id="btn-copy" onclick="copyLink()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar link
+      </button>
+    </div>
+
+    <div class="result-note">
+      <strong>¿Cómo se calcula?</strong> Cada respuesta suma puntos diferenciados para los tres candidatos, calibrados con base en sus programas de gobierno y declaraciones en medios verificados (La Silla Vacía, El Espectador, El Tiempo, La FM, Infobae · mayo 2026). El resultado refleja <strong>afinidad programática</strong> en los 4 temas evaluados, no intención de voto. · Primera vuelta: <strong>31 de mayo de 2026</strong>.
+    </div>
+
+    <button class="btn-restart" onclick="restart()">↺ Repetir el test</button>
+  </div>
+
+  <footer>Brújula Electoral 2026 · Herramienta informativa independiente · Sin cookies ni datos personales</footer>
+</div>
+
+<script>
+const SITE_URL = window.location.href.split('?')[0];
+
+const questions = [
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Cuál debería ser la estrategia principal frente al ELN y las disidencias FARC?", options:[
+    {text:"Retomar los diálogos de paz con condiciones firmes y plazos definidos", scores:{a:3,b:0,c:0}},
+    {text:"Acabar cualquier negociación y lanzar ofensiva militar inmediata", scores:{a:0,b:3,c:1}},
+    {text:"Cancelar la Paz Total, reactivar capturas y exigir sometimiento a la justicia", scores:{a:0,b:1,c:3}},
+    {text:"Dialogar solo con grupos en cese efectivo; extraditar a quienes incumplan", scores:{a:1,b:1,c:2}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Qué política de erradicación de cultivos ilícitos prefiere?", options:[
+    {text:"Sustitución voluntaria y proyectos productivos, sin fumigación con glifosato", scores:{a:3,b:0,c:0}},
+    {text:"Fumigación aérea masiva con glifosato de más de 300.000 ha de forma inmediata", scores:{a:0,b:3,c:1}},
+    {text:"Reactivar la fumigación de forma gradual y 'responsable', combinada con alternativas lícitas", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Cómo abordaría el hacinamiento carcelario y la reincidencia criminal?", options:[
+    {text:"Invertir en resocialización y educación dentro de cárceles; reducir criminalización de la pobreza", scores:{a:3,b:0,c:0}},
+    {text:"Construir megacárceles aisladas con capital privado, estilo El Salvador, sin telecomunicaciones", scores:{a:0,b:3,c:0}},
+    {text:"Crear colonias penales agrícolas con trabajo obligatorio y reeducación fuera de ciudades", scores:{a:0,b:0,c:3}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Cuál es su postura frente a la extradición de líderes criminales?", options:[
+    {text:"Debe condicionarse a acuerdos bilaterales y no operar en medio de procesos de paz vigentes", scores:{a:3,b:0,c:0}},
+    {text:"Extradición inmediata y sin excepciones para todos los capos del narcotráfico", scores:{a:0,b:3,c:2}},
+    {text:"Extradición activa pero respetando el marco jurídico y los acuerdos con EE.UU.", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Qué debería hacerse con la JEP (Jurisdicción Especial para la Paz)?", options:[
+    {text:"Defenderla y fortalecerla como pilar de la justicia transicional y el proceso de paz", scores:{a:3,b:0,c:0}},
+    {text:"Suspenderla por decreto y convocar referendo para reformarla o eliminarla", scores:{a:0,b:3,c:1}},
+    {text:"Reformarla para que los militares tengan mejores garantías y los civiles no queden impunes", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Cómo fortalecería las Fuerzas Militares y la Policía?", options:[
+    {text:"Mejoras salariales y de bienestar dentro del presupuesto actual; mantener incrementos de Petro", scores:{a:3,b:0,c:1}},
+    {text:"30.000 militares + 30.000 policías nuevos + cooperación directa con Israel y EE.UU.", scores:{a:0,b:2,c:3}},
+    {text:"Activar 82.000 reservistas veteranos, megacontratación y alianza estratégica con EE.UU.", scores:{a:0,b:3,c:1}},
+  ]},
+  { topic:"seg", topicLabel:"Seguridad", text:"¿Cuál visión de 'seguridad' le convence más?", options:[
+    {text:"La seguridad es inseparable de la justicia social: menos pobreza = menos crimen estructural", scores:{a:3,b:0,c:0}},
+    {text:"Solo el orden y la mano dura generan seguridad: quien delinque paga con cárcel larga e irrevocable", scores:{a:0,b:3,c:1}},
+    {text:"Se necesita firmeza con armados + corazón con comunidades: orden y transformación social simultáneos", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"eco", topicLabel:"Economía", text:"¿Qué modelo económico debería aplicar el próximo gobierno?", options:[
+    {text:"Capitalismo productivo con Estado activo, reforma agraria y transición lejos del petróleo", scores:{a:3,b:0,c:0}},
+    {text:"Libre mercado radical: recortar el Estado 40%, eliminar impuestos distorsionadores", scores:{a:0,b:3,c:0}},
+    {text:"Libre mercado moderado: estabilidad fiscal, austeridad ordenada y reglas claras para el inversionista", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"eco", topicLabel:"Economía", text:"¿Qué debería hacerse con el impuesto al patrimonio y las sobretasas a empresas?", options:[
+    {text:"Mantenerlos y ampliarlos: los grandes capitales deben aportar más al gasto social", scores:{a:3,b:0,c:0}},
+    {text:"Eliminarlos de inmediato para liberar capital productivo y atraer inversión", scores:{a:0,b:3,c:2}},
+    {text:"Eliminar el impuesto al patrimonio y simplificar el estatuto tributario de forma gradual", scores:{a:0,b:2,c:3}},
+  ]},
+  { topic:"eco", topicLabel:"Economía", text:"¿Cuál es su postura frente al fracking (petróleo no convencional)?", options:[
+    {text:"Prohibición total: la transición energética es innegociable y los riesgos ambientales son inaceptables", scores:{a:3,b:0,c:0}},
+    {text:"Implementarlo agresivamente para maximizar ingresos fiscales y soberanía energética", scores:{a:0,b:3,c:1}},
+    {text:"Permitirlo con estándares ambientales estrictos, como parte de una 'revolución energética' diversificada", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"eco", topicLabel:"Economía", text:"¿Cómo califica el déficit fiscal del 6,4 % del PIB dejado por el gobierno Petro en 2025?", options:[
+    {text:"Es resultado de inversión social necesaria; se corrige con crecimiento y combatir la evasión tributaria", scores:{a:3,b:0,c:0}},
+    {text:"Es una catástrofe que exige un ajuste estructural drástico e inmediato (recortar 25–40% del gasto)", scores:{a:0,b:3,c:1}},
+    {text:"Es un problema serio que requiere austeridad ordenada, renegociación de deuda y regla fiscal creíble", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"eco", topicLabel:"Economía", text:"¿Qué peso debería tener el Estado en la economía?", options:[
+    {text:"Estado activo y emprendedor: alianzas público-populares, banca pública, reforma agraria profunda", scores:{a:3,b:0,c:0}},
+    {text:"Estado mínimo: privatizar, recortar funcionarios radicalmente, el mercado asigna mejor que el gobierno", scores:{a:0,b:3,c:0}},
+    {text:"Estado eficiente pero no grande: menos burocracia, fusionar ministerios, foco en infraestructura y educación", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"pen", topicLabel:"Pensiones", text:"¿Qué debería hacerse con la Reforma Pensional de Petro (Ley 2381 de 2024)?", options:[
+    {text:"Defenderla y aplicarla: garantiza pisos básicos para adultos mayores que nunca cotizaron", scores:{a:3,b:0,c:0}},
+    {text:"Derogarla: destruye el ahorro individual y financia el populismo con dinero de los trabajadores", scores:{a:0,b:3,c:1}},
+    {text:"Reformarla para proteger el ahorro individual, dar sostenibilidad fiscal y separar Colombia Mayor", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"pen", topicLabel:"Pensiones", text:"¿Qué opina del traslado de ahorros de las AFP a Colpensiones?", options:[
+    {text:"Es correcto: los fondos privados capturaron rentabilidad que debió quedarse en el sistema solidario", scores:{a:3,b:0,c:0}},
+    {text:"Es un robo al ahorro de los trabajadores para financiar el gasto del gobierno de turno", scores:{a:0,b:3,c:2}},
+    {text:"Genera riesgos de sostenibilidad fiscal graves y debe suspenderse hasta fallo definitivo de la Corte", scores:{a:0,b:2,c:3}},
+  ]},
+  { topic:"pen", topicLabel:"Pensiones", text:"¿Cómo protegería a adultos mayores que nunca cotizaron suficientemente?", options:[
+    {text:"Ampliar Colombia Mayor a 5 millones de beneficiarios con subsidio mensual robusto ($230.000+)", scores:{a:3,b:0,c:1}},
+    {text:"Ampliar a ~3 millones con enfoque de ahorro voluntario semanal complementado con regalías", scores:{a:0,b:1,c:3}},
+    {text:"Ampliar gradualmente Colombia Mayor sin cambios estructurales; priorizar empleo formal sostenible", scores:{a:0,b:3,c:1}},
+  ]},
+  { topic:"pen", topicLabel:"Pensiones & Empleo", text:"¿Qué opina de los recargos dominicales y nocturnos para los trabajadores?", options:[
+    {text:"Son derechos laborales conquistados que deben mantenerse o ampliarse sin excepción", scores:{a:3,b:0,c:2}},
+    {text:"Encarecen el trabajo formal y deberían eliminarse para incentivar la contratación en pymes", scores:{a:0,b:3,c:0}},
+    {text:"Mantenerlos pero simplificarlos para que no desestimule la contratación en pequeñas empresas", scores:{a:1,b:1,c:3}},
+  ]},
+  { topic:"emp", topicLabel:"Empleo", text:"Para reducir el desempleo juvenil (22–24 %), ¿qué prioriza?", options:[
+    {text:"Renta Joven estatal ($800k–$1M/mes), reforma educativa pública y economía popular", scores:{a:3,b:0,c:0}},
+    {text:"Bajar impuestos a empresas para que contraten más; eliminar rigideces laborales", scores:{a:0,b:3,c:1}},
+    {text:"Estrategia '3E': Empleo + Estudio + Emprendimiento con créditos baratos y alianzas público-privadas", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"emp", topicLabel:"Liderazgo", text:"¿Qué perfil de liderazgo presidencial prefiere?", options:[
+    {text:"Intelectual con trayectoria en derechos humanos, diálogos de paz y larga carrera legislativa", scores:{a:3,b:0,c:0}},
+    {text:"Outsider disruptivo que rompe con el establecimiento, sin ataduras a partidos tradicionales", scores:{a:0,b:3,c:0}},
+    {text:"Legisladora con tres periodos de experiencia, coalición amplia y solvencia técnico-política", scores:{a:0,b:0,c:3}},
+  ]},
+  { topic:"emp", topicLabel:"Liderazgo", text:"¿Cuál describe mejor su posición frente al gobierno Petro?", options:[
+    {text:"Sus avances en justicia social son valiosos; hay que corregir errores pero mantener la dirección", scores:{a:3,b:0,c:0}},
+    {text:"Fue un fracaso completo que destruyó economía y seguridad; necesito un quiebre total e inmediato", scores:{a:0,b:3,c:1}},
+    {text:"Fue perjudicial pero las reformas no se deshacen solas; se necesita moderación e institucionalidad", scores:{a:0,b:1,c:3}},
+  ]},
+  { topic:"emp", topicLabel:"Visión de país", text:"¿Cómo imagina a Colombia en 2030 bajo el próximo gobierno?", options:[
+    {text:"País en transición verde, con paz duradera, reforma agraria real y sin dependencia del petróleo", scores:{a:3,b:0,c:0}},
+    {text:"'País Milagro' con crecimiento del 7 %, Estado mínimo, seguridad tipo Bukele y negocios liberados", scores:{a:0,b:3,c:0}},
+    {text:"País estable, finanzas sanas, libertades garantizadas, respeto al inversionista y seguridad real", scores:{a:0,b:0,c:3}},
+  ]},
+];
+
+const TOTAL = questions.length;
+let current = 0;
+let answers = Array(TOTAL).fill(null);
+
+const candidates = [
+  {key:'a', name:'Iván Cepeda', party:'Pacto Histórico / Alianza por la Vida', color:'#3ecf8e', glow:'rgba(62,207,142,.22)'},
+  {key:'b', name:'Abelardo De La Espriella', party:'Defensores de la Patria', color:'#f5c842', glow:'rgba(245,200,66,.22)'},
+  {key:'c', name:'Paloma Valencia', party:'Centro Democrático', color:'#e84040', glow:'rgba(232,64,64,.22)'},
+];
+
+const topicMap = {seg:'topic-seg', eco:'topic-eco', pen:'topic-pen', emp:'topic-lider'};
+const topicNames = {seg:'Seguridad', eco:'Economía', pen:'Pensiones', emp:'Empleo/Liderazgo'};
+
+function render() {
+  const q = questions[current];
+  const pct = Math.round((current / TOTAL) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `Pregunta ${current+1} de ${TOTAL}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+
+  const card = document.getElementById('q-card');
+  card.innerHTML = `
+    <span class="topic-chip ${topicMap[q.topic]}">${q.topicLabel}</span>
+    <p class="q-text">${q.text}</p>
+    <div class="options">
+      ${q.options.map((opt,i) => `
+        <div class="option${answers[current]===i?' selected':''}"
+             style="${answers[current]===i?'--sel-color:#f5c842;--sel-bg:rgba(245,200,66,.07)':''}"
+             onclick="selectOpt(${i})">
+          <span class="bullet"></span>${opt.text}
+        </div>`).join('')}
+    </div>
+    <div class="nav">
+      ${current>0?`<button class="btn-back" onclick="goBack()">← Anterior</button>`:''}
+      <button class="btn-next" id="btn-next" onclick="goNext()"
+        ${answers[current]===null?'disabled':''}>
+        ${current===TOTAL-1?'🗳️ Ver mis resultados':'Siguiente →'}
+      </button>
+    </div>`;
+
+  card.style.animation='none'; card.offsetHeight; card.style.animation='fadeUp .35s ease both';
+}
+
+function selectOpt(i) { answers[current]=i; render(); }
+function goBack() { if(current>0){current--;render();} }
+function goNext() { if(answers[current]===null)return; if(current<TOTAL-1){current++;render();}else showResults(); }
+
+function showResults() {
+  // Overall scores
+  const tot = {a:0,b:0,c:0};
+  questions.forEach((q,qi)=>{
+    const ans=answers[qi]; if(ans===null)return;
+    const s=q.options[ans].scores;
+    tot.a+=s.a; tot.b+=s.b; tot.c+=s.c;
+  });
+  const grand = tot.a+tot.b+tot.c||1;
+  const pcts = {
+    a:Math.round(tot.a/grand*100),
+    b:Math.round(tot.b/grand*100),
+    c:Math.round(tot.c/grand*100)
+  };
+  const diff = 100-pcts.a-pcts.b-pcts.c;
+  const mk = Object.keys(pcts).reduce((a,b)=>pcts[a]>pcts[b]?a:b);
+  pcts[mk]+=diff;
+
+  // Topic breakdown
+  const topics = ['seg','eco','pen','emp'];
+  const topicTot = {};
+  topics.forEach(t=>{ topicTot[t]={a:0,b:0,c:0}; });
+  questions.forEach((q,qi)=>{
+    const ans=answers[qi]; if(ans===null)return;
+    const s=q.options[ans].scores;
+    topicTot[q.topic].a+=s.a; topicTot[q.topic].b+=s.b; topicTot[q.topic].c+=s.c;
+  });
+
+  document.getElementById('quiz').style.display='none';
+  const res=document.getElementById('results');
+  res.style.display='block';
+
+  const sorted=[...candidates].sort((x,y)=>pcts[y.key]-pcts[x.key]);
+  const winner=sorted[0];
+
+  document.getElementById('results-cards').innerHTML = sorted.map((c,i)=>`
+    <div class="candidate-result${i===0?' top-pick':''}" style="--c-color:${c.color};--c-glow:${c.glow}">
+      ${i===0?`<div class="c-top-badge">✦ Tu mayor afinidad</div>`:''}
+      <div class="c-header">
+        <div>
+          <div class="c-name">${c.name}</div>
+          <div class="c-party">${c.party}</div>
+        </div>
+        <div class="c-pct">${pcts[c.key]}%</div>
+      </div>
+      <div class="c-bar-track"><div class="c-bar-fill" id="bar-${c.key}"></div></div>
+      <div class="c-sub">${getSub(c.key,pcts[c.key])}</div>
+    </div>`).join('');
+
+  // Breakdown
+  document.getElementById('breakdown-rows').innerHTML = topics.map(t=>{
+    const tv=topicTot[t]; const tg=tv.a+tv.b+tv.c||1;
+    const tp={a:Math.round(tv.a/tg*100),b:Math.round(tv.b/tg*100),c:Math.round(tv.c/tg*100)};
+    return `<div class="topic-row">
+      <div class="topic-label">${topicNames[t]}</div>
+      <div class="topic-bars">
+        ${candidates.map(c=>`
+          <div class="mini-bar-wrap">
+            <span class="mini-dot" style="background:${c.color}"></span>
+            <div class="mini-track"><div class="mini-fill" id="mb-${t}-${c.key}" style="background:${c.color}"></div></div>
+            <span class="mini-pct">${tp[c.key]}%</span>
+          </div>`).join('')}
+      </div></div>`;
+  }).join('');
+
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    sorted.forEach(c=>{ const el=document.getElementById('bar-'+c.key); if(el)el.style.width=pcts[c.key]+'%'; });
+    topics.forEach(t=>candidates.forEach(c=>{ const el=document.getElementById('mb-'+t+'-'+c.key); if(el)el.style.width=(()=>{const tv=topicTot[t];const tg=tv.a+tv.b+tv.c||1;return Math.round(tv[c.key]/tg*100)+'%';})(); }));
+  }));
+}
+
+function getSub(key,pct) {
+  if(pct>=55){
+    if(key==='a')return 'Alta afinidad con la agenda de paz, economía popular y transición energética verde.';
+    if(key==='b')return 'Alta afinidad con la ruptura institucional, seguridad dura y Estado mínimo estilo Bukele/Milei.';
+    if(key==='c')return 'Alta afinidad con el uribismo moderado, libre mercado ordenado y Seguridad Total.';
+  } else if(pct>=30){
+    if(key==='a')return 'Afinidad media con el Pacto Histórico; valoras lo social pero con matices importantes.';
+    if(key==='b')return 'Afinidad media con la propuesta disruptiva; te atrae el cambio radical pero no todo su programa.';
+    if(key==='c')return 'Afinidad media con el Centro Democrático; te convence la estabilidad y la firmeza institucional.';
+  }
+  return 'Baja afinidad con este candidato en los cuatro temas evaluados.';
+}
+
+function shareWA() {
+  const text = `🗳️ Hice el test de la Brújula Electoral Colombia 2026 y descubrí mi afinidad con los candidatos presidenciales. ¡Hazlo tú también! 👇\n${SITE_URL}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(SITE_URL).then(()=>{
+    const btn=document.getElementById('btn-copy');
+    btn.classList.add('copied');
+    btn.innerHTML=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ¡Copiado!`;
+    setTimeout(()=>{
+      btn.classList.remove('copied');
+      btn.innerHTML=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copiar link`;
+    },2500);
+  });
+}
+
+function restart() {
+  current=0; answers=Array(TOTAL).fill(null);
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
